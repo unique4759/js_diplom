@@ -1,2 +1,6 @@
 'use strict';
-console.log('Приступим');
+
+import togglePopUp from './modules/togglePopUp';
+
+//Open popup
+togglePopUp();
