@@ -3,7 +3,7 @@ const sendForm = () => {
         loadMessage = 'Загрузка...',
         successMessage = 'Спасибо! Мы скоро с Вами свяжемся!',
         form = document.querySelector('.main-form'),
-        form2 = document.querySelector('.capture-form'),
+        form2 = document.querySelectorAll('.capture-form'),
         statusMessage = document.createElement('div');
 
     statusMessage.style.cssText = 'font-size: 14px; color: #333;';
@@ -19,6 +19,7 @@ const sendForm = () => {
             statusMessage.style.cssText = 'color: red;';
             statusMessage.textContent = 'Проверьте правильность ввода телефона';
         } else {
+            statusMessage.style.cssText = 'color: #333;';
             const formData = new FormData(data);
 
             postData(formData).then(res => {
@@ -45,10 +46,13 @@ const sendForm = () => {
         proccessForm(form);
     });
 
-    form2.addEventListener('submit', (e) => {
-        e.preventDefault();
-        proccessForm(form2);
+    form2.forEach((item) => {
+        item.addEventListener('submit', (e) => {
+            e.preventDefault();
+            proccessForm(item);
+        });
     });
+    
 
     const postData = (body) => {
         return fetch('./server.php', {

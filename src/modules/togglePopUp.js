@@ -1,44 +1,52 @@
 const togglePopUp = () => {
-    let popup = document.querySelector('.popup-call'),
-        popupBtn = document.querySelectorAll('.call-btn'),
-        popupContent = document.querySelector('.popup-content');
+    document.addEventListener('click', (e) => {
+        let target = e.target;
+        
+        if(!target.matches('.call-btn, .discount-btn')) {
+            return;
+        }
 
-    if(document.documentElement.clientWidth > 768) {
-        popupContent.style.opacity = 0;
-        popupContent.style.transition = "1s";
-    }
+        e.preventDefault();
 
-    popupBtn.forEach((elem) => {
-        elem.addEventListener('click', () => {
-            if(document.documentElement.clientWidth > 768) {
-                setTimeout(function () {
-                    popupContent.style.opacity = 1;
-                }, 500);
-                popup.style.display = 'block';
-            } else {
-                popup.style.display = 'block';
-            }
-        });
-    });
+        let pathClassName = target.classList[0].split('-')[0],
+            popup = document.querySelector(`.popup-${pathClassName}`),
+            popupContent = popup.querySelector('.popup-content'),
+            getForm = popup.querySelector('.capture-form');
 
-    popup.addEventListener('click', (event) => {
-        let target = event.target;
+        getForm.setAttribute('name', `${pathClassName}_form`);
+            
+        if(document.documentElement.clientWidth > 768) {
+            popupContent.style.opacity = 0;
+            popupContent.style.transition = "1s";
 
-        if(target.classList.contains('popup-close')) {
-            popup.style.display = 'none';
-            if(document.documentElement.clientWidth > 768) {
-                popupContent.style.opacity = 0;
-            }
+            setTimeout(function () {
+                popupContent.style.opacity = 1;
+            }, 500);
+
+            popup.style.display = 'block';
         } else {
-            target = target.closest('.popup-content');
+            popup.style.display = 'block';
+        }
 
-            if(!target) {
+        popup.addEventListener('click', (event) => {
+            let target = event.target;
+
+            if(target.classList.contains('popup-close')) {
                 popup.style.display = 'none';
                 if(document.documentElement.clientWidth > 768) {
                     popupContent.style.opacity = 0;
                 }
+            } else {
+                target = target.closest('.popup-content');
+
+                if(!target) {
+                    popup.style.display = 'none';
+                    if(document.documentElement.clientWidth > 768) {
+                        popupContent.style.opacity = 0;
+                    }
+                }
             }
-        }
+        });
     });
 };
 
