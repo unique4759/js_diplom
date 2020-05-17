@@ -2,7 +2,7 @@ const togglePopUp = () => {
     document.addEventListener('click', (e) => {
         let target = e.target;
         
-        if(!target.matches('.call-btn, .discount-btn')) {
+        if(!target.matches('.call-btn, .discount-btn, .check-btn')) {
             return;
         }
 
