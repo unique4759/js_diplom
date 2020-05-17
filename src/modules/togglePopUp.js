@@ -2,7 +2,7 @@ const togglePopUp = () => {
     document.addEventListener('click', (e) => {
         let target = e.target;
         
-        if(!target.matches('.call-btn, .discount-btn, .check-btn')) {
+        if(!target.matches('.call-btn, .discount-btn, .check-btn, .consultation-btn')) {
             return;
         }
 
@@ -13,8 +13,6 @@ const togglePopUp = () => {
             popupContent = popup.querySelector('.popup-content'),
             getForm = popup.querySelector('.capture-form');
 
-        getForm.setAttribute('name', `${pathClassName}_form`);
-            
         if(document.documentElement.clientWidth > 768) {
             popupContent.style.opacity = 0;
             popupContent.style.transition = "1s";

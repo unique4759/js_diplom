@@ -19,16 +19,37 @@ const sendForm = () => {
             statusMessage.style.cssText = 'color: red;';
             statusMessage.textContent = 'Проверьте правильность ввода телефона';
         } else {
+            let checkForm = data.getAttribute('name');
+
             statusMessage.style.cssText = 'color: #333;';
             const formData = new FormData(data);
 
-            postData(formData).then(res => {
+            let body = {};
+
+            formData.forEach((val, key) => {
+                body[key] = val;
+            });
+
+            if(checkForm === 'consultation_form') {
+                let question = document.querySelector('input[name="user_quest"]').value;
+                body['user_question'] = question;
+            }
+
+            postData(body).then(res => {
+                let question = document.querySelector('input[name="user_quest"]'),
+                    btnConsultation = document.querySelector('.consultation-btn');
+                    
                 if(res.status !== 200) {
                     throw new Error('status not 200!');
                 }
                 statusMessage.textContent = successMessage;
 
                 data.reset();
+
+                if(question.value !== '') {
+                    question.value = '';
+                    btnConsultation.disabled = true;
+                }
 
                 setTimeout(function() {
                     statusMessage.remove();
@@ -57,7 +78,10 @@ const sendForm = () => {
     const postData = (body) => {
         return fetch('./server.php', {
             method: 'POST',
-            body: body
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
         });
     };
 };
