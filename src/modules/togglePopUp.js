@@ -11,7 +11,16 @@ const togglePopUp = () => {
         let pathClassName = target.classList[0].split('-')[0],
             popup = document.querySelector(`.popup-${pathClassName}`),
             popupContent = popup.querySelector('.popup-content'),
-            getForm = popup.querySelector('.capture-form');
+            getForm = popup.querySelector('.capture-form'),
+            inputs = popup.querySelectorAll('input');
+
+        inputs.forEach((item) => {
+            let checkReq = item.getAttribute('required');
+
+            if(!checkReq) {
+                item.required = true;
+            }
+        });
 
         if(document.documentElement.clientWidth > 768) {
             popupContent.style.opacity = 0;
@@ -31,17 +40,27 @@ const togglePopUp = () => {
 
             if(target.classList.contains('popup-close')) {
                 popup.style.display = 'none';
+
                 if(document.documentElement.clientWidth > 768) {
                     popupContent.style.opacity = 0;
                 }
+
+                inputs.forEach((item) => {
+                    item.removeAttribute("required");
+                });
             } else {
                 target = target.closest('.popup-content');
 
                 if(!target) {
                     popup.style.display = 'none';
+
                     if(document.documentElement.clientWidth > 768) {
                         popupContent.style.opacity = 0;
                     }
+
+                    inputs.forEach((item) => {
+                        item.removeAttribute("required");
+                    });
                 }
             }
         });
