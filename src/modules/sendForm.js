@@ -35,6 +35,28 @@ const sendForm = () => {
                 body['user_question'] = question;
             }
 
+            if(checkForm === 'calculator_form') {
+                let checkSeptic = document.getElementById('myonoffswitch').checked,
+                    checkBottom = document.getElementById('myonoffswitch-two').checked,
+                    meters = document.querySelector('#collapseFour input').value,
+                    selects = document.querySelectorAll('#collapseTwo select'),
+                    secondTitle = document.querySelectorAll('#collapseTwo .title-text')[1],
+                    totalValue = document.getElementById('calc-result').value;
+
+                body['type_septic'] = checkSeptic ? 'Однокамерный' : 'Двухкамерный';
+                body['check_bottom'] = `Наличие днища: ${checkBottom ? 'Да' : 'Нет'}`;
+                body['first_septic_diameter'] = +selects[0].options[selects[0].selectedIndex].value.slice(0, -6);
+                body['first_septic_rings'] = +selects[1].options[selects[1].selectedIndex].value.slice(0, -6);
+                if(!checkSeptic) {
+                    body['second_septic_diameter'] = +selects[2].options[selects[2].selectedIndex].value.slice(0, -6);
+                    body['second_septic_rings'] = +selects[3].options[selects[3].selectedIndex].value.slice(0, -6);
+                }
+                if(meters) {
+                    body['meters'] = meters;
+                }
+                body['total'] = +totalValue;
+            }
+
             postData(body).then(res => {
                 let question = document.querySelector('input[name="user_quest"]'),
                     btnConsultation = document.querySelector('.consultation-btn');
