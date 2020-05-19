@@ -45,6 +45,8 @@ const togglePopUp = () => {
                     popupContent.style.opacity = 0;
                 }
 
+                getForm.reset();
+
                 inputs.forEach((item) => {
                     item.removeAttribute("required");
                 });
@@ -57,6 +59,8 @@ const togglePopUp = () => {
                     if(document.documentElement.clientWidth > 768) {
                         popupContent.style.opacity = 0;
                     }
+
+                    getForm.reset();
 
                     inputs.forEach((item) => {
                         item.removeAttribute("required");

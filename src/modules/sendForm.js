@@ -17,7 +17,7 @@ const sendForm = () => {
 
         if(!/^(\+7)[0-9]{10}$/g.test(inputPhone)) {
             statusMessage.style.cssText = 'color: red;';
-            statusMessage.textContent = 'Проверьте правильность ввода телефона';
+            statusMessage.textContent = 'Введите правильный номер (н-р, +79999999999)';
         } else {
             let checkForm = data.getAttribute('name');
 
